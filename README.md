@@ -1,1 +1,2 @@
-# products-crud
+# EuroCert - zadanie rekrutacyjne
+
