@@ -1,29 +1,5 @@
-import pytest
-
 from app.api.v1.services.auth import get_user_from_api_key
-from app.database.models.users import ApiKey, User
-
-
-@pytest.fixture
-def add_api_key_and_user(db_session):
-    user = User(
-        username="test_user",
-        password_hash="pwhash",
-    )
-
-    db_session.add(user)
-    db_session.commit()
-
-    api_key = ApiKey(key="test_key", active=True, user_id=user.id)
-
-    db_session.add(api_key)
-    db_session.commit()
-
-    yield
-
-    db_session.delete(api_key)
-    db_session.delete(user)
-    db_session.commit()
+from app.database.models.users import User
 
 
 def test_get_user_from_api_key_on_non_existent_api_key(db_session):
