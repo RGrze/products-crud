@@ -42,13 +42,12 @@ def create_user(db: Session, user_in: UserIn) -> users_orm.User:
         pw_hash = user_in.password + "not_really_hashed"
         user = users_orm.User(username=user_in.username, password_hash=pw_hash)
 
-        apikey = users_orm.ApiKey(key=secrets.token_urlsafe(4), active=True)
-
-        db.add_all([apikey, user])
+        db.add(user)
         db.flush()
 
-        user.api_keys.add(apikey)
+        apikey = users_orm.ApiKey(key=secrets.token_urlsafe(4), active=True, user_id=user.id)
 
+        db.add(apikey)
         db.commit()
 
         return user

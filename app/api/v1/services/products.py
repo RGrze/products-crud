@@ -141,7 +141,7 @@ def update_product(
     except ValueError:
         raise
 
-    changed_attrs = product.dict(exclude_unset=True)
+    changed_attrs = product.model_dump(exclude_unset=True)
     for attr, value in changed_attrs.items():
         setattr(product_orm, attr, value)
 
